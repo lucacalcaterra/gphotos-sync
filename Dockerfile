@@ -1,7 +1,7 @@
-FROM python:3-alpine AS gphotos-sync-builder
+FROM arm32v7/python:3-alpine3.12 AS gphotos-sync-builder
 
 RUN apk add --update --no-cache gcc musl-dev linux-headers \
-	&& rm -rf /var/cache/apk/*
+    && rm -rf /var/cache/apk/*
 
 ENV PYTHONDONTWRITEBYTECODE=1
 
@@ -11,7 +11,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 RUN pip install --no-cache-dir --upgrade gphotos-sync
 
-FROM python:3-alpine
+FROM arm32v7/python:3-alpine3.12
 
 COPY --from=gphotos-sync-builder /opt/venv /opt/venv
 
